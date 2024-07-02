@@ -1,0 +1,8 @@
+/*Создать таблицу author следующей структуры: https://disk.yandex.ru/i/KyOOtyQzEe4IsQ */
+
+CREATE TABLE author
+(
+    author_id INT PRIMARY KEY AUTO_INCREMENT, 
+    name_author VARCHAR(50)
+);
+
