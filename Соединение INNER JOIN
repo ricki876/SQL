@@ -1,0 +1,9 @@
+/*Вывести название, жанр и цену тех книг, количество которых больше 8, в отсортированном по убыванию цены виде.
+https://disk.yandex.ru/i/E--jBjjoiE9kDQ */
+
+
+SELECT title, name_genre, price
+FROM 
+    book INNER JOIN genre
+    ON book.amount > 8 AND book.genre_id = genre.genre_id
+    ORDER BY price DESC;
