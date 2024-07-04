@@ -1,0 +1,25 @@
+/*Для каждой отдельной книги необходимо вывести информацию о количестве проданных экземпляров и их стоимости за 2020 и 2019 год . 
+За 2020 год проданными считать те экземпляры, которые уже оплачены. 
+Вычисляемые столбцы назвать Количество и Сумма. Информацию отсортировать по убыванию стоимости.*/
+
+SELECT title, SUM(query_in.Количество1) AS Количество, SUM(query_in.Сумма1) AS Сумма
+FROM
+  (
+   SELECT title, SUM(buy_archive.amount) AS Количество1, SUM(buy_archive.price * buy_archive.amount) AS Сумма1
+   FROM 
+       buy_archive 
+       INNER JOIN book USING(book_id)
+   GROUP BY title
+   UNION ALL
+   SELECT title, SUM(buy_book.amount), SUM(price * buy_book.amount)
+   FROM 
+       buy_step
+       INNER JOIN step USING(step_id)
+       INNER JOIN buy USING(buy_id)
+       INNER JOIN buy_book USING(buy_id)
+       INNER JOIN book USING(book_id)
+       WHERE buy_step.date_step_end IS NOT NULL AND name_step = 'Оплата'
+   GROUP BY title
+   ) AS query_in
+GROUP BY title
+ORDER BY Сумма DESC;
