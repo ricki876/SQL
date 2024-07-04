@@ -1,0 +1,11 @@
+/*Вывести информацию о каждом заказе: его номер, кто его сформировал (фамилия пользователя) и его стоимость (сумма произведений количества заказанных книг и их цены), 
+в отсортированном по номеру заказа виде. Последний столбец назвать Стоимость.*/
+
+SELECT buy.buy_id, name_client, SUM(price * buy_book.amount) AS Стоимость
+FROM 
+    client 
+    INNER JOIN buy ON client.client_id = buy.client_id
+    INNER JOIN buy_book ON buy.buy_id = buy_book.buy_id
+    INNER JOIN book ON buy_book.book_id = book.book_id
+GROUP BY buy.buy_id, name_client
+ORDER BY buy.buy_id;
