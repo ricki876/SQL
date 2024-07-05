@@ -1,0 +1,12 @@
+/*Если студент совершал несколько попыток по одной и той же дисциплине, то вывести разницу в днях между первой и последней попыткой. 
+В результат включить фамилию и имя студента, название дисциплины и вычисляемый столбец Интервал. 
+Информацию вывести по возрастанию разницы. Студентов, сделавших одну попытку по дисциплине, не учитывать. */
+
+SELECT name_student, name_subject, DATEDIFF(MAX(date_attempt), MIN(date_attempt)) AS Интервал
+FROM 
+    student
+    INNER JOIN attempt USING(student_id)
+    INNER JOIN subject USING(subject_id)
+GROUP BY attempt.student_id, name_subject
+HAVING attempt.student_id > 1
+ORDER BY Интервал;
